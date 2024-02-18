@@ -13,7 +13,7 @@ Repository Used In Data Pains Series!
 
 ## Guide
 
-*
+* https://medium.com/@simon.thelin90/tutorial-data-product-building-e2e-step-2-whiskey-extractor-in-argo-workflow-d317e9d2f92b
 
 ## Argo Workflow
 
