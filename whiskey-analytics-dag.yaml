@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: whiskey-analytics-dag
+  namespace: argo
+spec:
+  schedule: "5 * * *"
+  concurrencyPolicy: "Forbid"
+  workflowSpec:
+    entrypoint: whiskey-analytics-dag
+    ttlStrategy:
+      secondsAfterSuccess: 360
+      secondsAfterFailure: 360
+    serviceAccountName: argo-argo-workflows-server
+    templates:
+      - name: whiskey-analytics-dag
+        dag:
+          failFast: true
+          tasks:
+            - name: check-bucket
+              templateRef:
+                template: check-bucket
+                name: check-bucket
+
+        #    - name: whiskey-extractor
+        #      templateRef:
+        #        template: whiskey-extractor
+        #        name: whiskey-extractor
+#
+        #    - name: print-success
+        #      templateRef:
+        #        template: print-success
+        #        name: print-success

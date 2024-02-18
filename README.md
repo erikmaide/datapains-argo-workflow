@@ -9,7 +9,12 @@ Repository Used In Data Pains Series!
 * Kubernetes `(docker-desktop, minikube, etc)`
 * Helm
 * Make
+* Argo CLI
 
+
+```bash
+brew install argocd
+```
 
 ## Guide
 

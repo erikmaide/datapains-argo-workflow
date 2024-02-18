@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: check-bucket-submittable
+  namespace: argo
+spec:
+  entrypoint: check-bucket-template
+  serviceAccountName: argo-argo-workflows-server
+  templates:
+    - name: check-bucket-template
+      resource:
+        action: create
+        successCondition: status.succeeded = 1
+        failureCondition: status.failed > 1
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: minio-check-bucket-job
+            namespace: whiskey-analytics
+          spec:
+            template:
+              spec:
+                containers:
+                - name: minio-client-job
+                  imagePullPolicy: Always
+                  image: minio/mc:latest
+                  command:
+                    - sh
+                    - -c
+                    - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc ls --with-lock minio/lakehouse-local --region=us-west-1
+                  resources:
+                    limits:
+                      memory: 20Mi
+                      cpu: "0.1"
+                    requests:
+                      memory: 20Mi
+                      cpu: "0.1"
+                restartPolicy: Never
+            backoffLimit: 4
