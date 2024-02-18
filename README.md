@@ -11,11 +11,6 @@ Repository Used In Data Pains Series!
 * Make
 * Argo CLI
 
-
-```bash
-brew install argocd
-```
-
 ## Guide
 
 *
@@ -30,3 +25,12 @@ See versions [here](https://github.com/argoproj/argo-workflows/releases).
 
 ## Whiskey Extractor
 
+```bash
+make deploy-argo-workflow-chart CHART=whiskey-analytics
+```
+
+Update chart
+
+```bash
+make update-chart CHART=whiskey-analytics
+```

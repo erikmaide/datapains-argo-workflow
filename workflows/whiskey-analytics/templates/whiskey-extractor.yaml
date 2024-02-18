@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: whiskey-extractor-submittable
+  namespace: argo
+spec:
+  entrypoint: whiskey-extractor-template
+  serviceAccountName: argo-argo-workflows-server
+  templates:
+    - name: whiskey-extractor-template
+      resource:
+        action: apply
+        successCondition: status.succeeded = 1
+        failureCondition: status.failed > 1
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            labels:
+              app: "whiskey-extractor-{-workflow.uid-}"
+            name: "whiskey-extractor-{-workflow.uid-}"
+            namespace: whiskey-analytics
+          spec:
+            template:
+              metadata:
+                labels:
+                  app: "whiskey-extractor-{-workflow.uid-}"
+              spec:
+                serviceAccountName: whiskey-service-account
+                containers:
+                - name: "whiskey-extractor-{-workflow.uid-}"
+                  image: datapains/whiskey-extractor:0.0.1
+                  command: [ "make" ]
+                  args: ["--directory", "/app/", "run", "config-file-name=/app/config/config.ini"]
+                  imagePullPolicy: Never
+                  resources:
+                    limits:
+                      memory: 1Gi
+                      cpu: "0.5"
+                    requests:
+                      memory: 1Gi
+                      cpu: "0.5"
+                  volumeMounts:
+                    - name: whiskey-analytics-configmap
+                      mountPath: /app/config
+                  env:
+                    - name: AWS_ACCESS_KEY_ID
+                      value: "accountadmin123"
+                    - name: AWS_SECRET_ACCESS_KEY
+                      value: "accountadminsecret123"
+                    - name: AWS_DEFAULT_REGION
+                      value: "us-west-1"
+                volumes:
+                  - name: whiskey-analytics-configmap
+                    configMap:
+                      name: "whiskey-analytics-configmap"
+                      defaultMode: 0777
+                      items:
+                        - key: "config.ini"
+                          path: "config.ini"
+                restartPolicy: Never
+            backoffLimit: 1

@@ -4,7 +4,7 @@ metadata:
   name: whiskey-analytics-dag
   namespace: argo
 spec:
-  schedule: "5 * * *"
+  schedule: "5 * * * *"
   concurrencyPolicy: "Forbid"
   workflowSpec:
     entrypoint: whiskey-analytics-dag
@@ -17,17 +17,19 @@ spec:
         dag:
           failFast: true
           tasks:
-            - name: check-bucket
+            - name: check-bucket-submittable
               templateRef:
-                template: check-bucket
-                name: check-bucket
+                template: check-bucket-template
+                name: check-bucket-submittable
 
-        #    - name: whiskey-extractor
-        #      templateRef:
-        #        template: whiskey-extractor
-        #        name: whiskey-extractor
-#
-        #    - name: print-success
-        #      templateRef:
-        #        template: print-success
-        #        name: print-success
+            - name: whiskey-extractor-submittable
+              templateRef:
+                template: whiskey-extractor-template
+                name: whiskey-extractor-submittable
+              dependencies: ["check-bucket-submittable"]
+
+            - name: print-success-submittable
+              templateRef:
+                template: print-success-template
+                name: print-success-submittable
+              dependencies: ["check-bucket-submittable", "whiskey-extractor-submittable"]
