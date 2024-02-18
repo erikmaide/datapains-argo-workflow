@@ -9,4 +9,4 @@ nuke-local-argo-workflow:
 
 .PHONY: deploy-argo-workflow-template
 deploy-argo-workflow-template:
-	helm install check-bucket ./workflows/whiskey-analytics --post-renderer ./workflows/argo-post.sh
+	helm $(CMD) check-bucket ./workflows/whiskey-analytics/templates/$(TEMPLATE) --post-renderer ./workflows/argo-post.sh

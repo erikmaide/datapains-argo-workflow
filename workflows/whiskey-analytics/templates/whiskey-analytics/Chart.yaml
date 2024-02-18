@@ -1,0 +1,3 @@
+apiVersion: v2
+name: whiskey-analytics
+version: 0.0.1

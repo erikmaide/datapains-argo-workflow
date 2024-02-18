@@ -16,9 +16,10 @@ spec:
           apiVersion: batch/v1
           kind: Job
           metadata:
-            name: minio-check-bucket-job
+            name: minio-check-bucket-job-template
             namespace: whiskey-analytics
           spec:
+            ttlSecondsAfterFinished: 1
             template:
               spec:
                 containers:
@@ -28,7 +29,7 @@ spec:
                   command:
                     - sh
                     - -c
-                    - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc ls --with-lock minio/lakehouse-local --region=us-west-1
+                    - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc ls minio/lakehouse-local
                   resources:
                     limits:
                       memory: 20Mi
