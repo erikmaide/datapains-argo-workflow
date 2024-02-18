@@ -9,17 +9,17 @@ spec:
   templates:
     - name: check-bucket-template
       resource:
-        action: create
+        action: apply
         successCondition: status.succeeded = 1
         failureCondition: status.failed > 1
         manifest: |
           apiVersion: batch/v1
           kind: Job
           metadata:
-            name: minio-check-bucket-job-template
+            name: "minio-check-bucket-job-{-workflow.uid-}"
             namespace: whiskey-analytics
           spec:
-            ttlSecondsAfterFinished: 1
+            ttlSecondsAfterFinished: 10
             template:
               spec:
                 containers:
@@ -29,7 +29,7 @@ spec:
                   command:
                     - sh
                     - -c
-                    - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc ls minio/lakehouse-local
+                    - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc ls minio/lakehouse-local/lakehouse/bronze/whiskey_bidding
                   resources:
                     limits:
                       memory: 20Mi
@@ -38,4 +38,4 @@ spec:
                       memory: 20Mi
                       cpu: "0.1"
                 restartPolicy: Never
-            backoffLimit: 4
+            backoffLimit: 1
