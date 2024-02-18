@@ -8,8 +8,12 @@ Repository Used In Data Pains Series!
 
 * Kubernetes `(docker-desktop, minikube, etc)`
 * Helm
-    * `brew install helm`
 * Make
+
+
+## Guide
+
+*
 
 ## Argo Workflow
 
