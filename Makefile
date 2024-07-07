@@ -4,6 +4,10 @@ update-chart: delete-argo-workflow-chart deploy-argo-workflow-chart
 setup-local-argo-workflow:
 	kubectl apply -f tools/k8s/local/ --validate=false
 
+.PHONY: delete-local-argo-workflow
+delete-local-argo-workflow:
+	kubectl delete -f tools/k8s/local/
+
 .PHONY: nuke-local-argo-workflow
 nuke-local-argo-workflow:
 	kubectl delete namespaces argo
