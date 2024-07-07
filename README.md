@@ -18,8 +18,10 @@ Repository Used In Data Pains Series!
 ## Argo Workflow
 
 ```bash
-make setup-helm-argo-workflow
+make setup-local-helm-argo-workflow
 ```
+
+Access UI [here](https://localhost:32767/).
 
 See versions [here](https://github.com/argoproj/argo-workflows/releases).
 
@@ -33,4 +35,16 @@ Update chart
 
 ```bash
 make update-chart CHART=whiskey-analytics
+```
+
+## Spark K8S Example
+
+```bash
+make deploy-argo-workflow-chart CHART=spark-k8s-example
+```
+
+Update chart
+
+```bash
+make update-chart CHART=spark-k8s-example
 ```

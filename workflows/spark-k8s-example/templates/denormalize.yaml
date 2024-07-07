@@ -1,0 +1,69 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: spark-example-submit
+  namespace: argo
+spec:
+  entrypoint: spark-example
+  serviceAccountName: argo
+  templates:
+    - name: spark-example
+      resource:
+        action: apply
+        successCondition: status.succeeded = 1
+        failureCondition: status.failed > 1
+        manifest: |
+          apiVersion: "sparkoperator.k8s.io/v1beta2"
+          kind: SparkApplication
+          metadata:
+            name: datapains-denormalize-example
+            namespace: spark
+          spec:
+            timeToLiveSeconds: 500
+            type: Python
+            sparkConf:
+                spark.driver.maxResultSize: 500Mi
+                spark.driver.memory: 500Mi
+                spark.executor.memory: 500Mi
+                spark.driver.cores: "1"
+                spark.executor.cores: "1"
+                spark.sql.shuffle.partitions: "1"
+                spark.kubernetes.container.image: "3.5.1-delta-4.0.0rc1-hadoop-3-java-17-scala-2.13-python-3.9:0.0.1"
+                spark.kubernetes.authenticate.driver.serviceAccountName: spark
+                spark.kubernetes.authenticate.executor.serviceAccountName: spark
+                spark.kubernetes.memoryOverheadFactor: "0.1"
+                spark.kubernetes.driver.request.cores: "0.1"
+                spark.kubernetes.executor.request.cores: "0.1"
+                spark.kubernetes.executor.limit.cores: "1"
+                spark.dynamicAllocation.enabled: "true"
+                spark.dynamicAllocation.shuffleTracking.enabled: "true"
+                spark.dynamicAllocation.minExecutors: "1"
+                spark.dynamicAllocation.maxExecutors: "1"
+                spark.kubernetes.allocation.batch.size: "1"
+                spark.dynamicAllocation.executorAllocationRatio: "1"
+                spark.sql.adaptive.enabled: "true"
+                spark.sql.adaptive.forceApply: "false"
+                spark.sql.adaptive.logLevel: "info"
+                spark.sql.adaptive.coalescePartitions.enabled: "true"
+                spark.sql.adaptive.fetchShuffleBlocksInBatch: "true"
+                spark.sql.adaptive.localShuffleReader.enabled: "true"
+                spark.sql.adaptive.skewJoin.enabled: "true"
+            mode: cluster
+            imagePullPolicy: Never
+            mainApplicationFile: local:///opt/spark/work-dir/examples/denormalize.py
+            sparkVersion: "3.5.1"
+            restartPolicy:
+                type: Never
+            driver:
+              cores: 1
+              memory: "500m"
+              labels:
+                version: 3.5.1
+                app: spark
+              serviceAccount: spark
+            executor:
+              cores: 1
+              memory: "500m"
+              labels:
+                version: 3.5.1
+                app: spark

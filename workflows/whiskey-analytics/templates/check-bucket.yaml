@@ -5,7 +5,7 @@ metadata:
   namespace: argo
 spec:
   entrypoint: check-bucket-template
-  serviceAccountName: argo-argo-workflows-server
+  serviceAccountName: argo
   templates:
     - name: check-bucket-template
       resource:

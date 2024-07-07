@@ -11,7 +11,7 @@ spec:
     ttlStrategy:
       secondsAfterSuccess: 360
       secondsAfterFailure: 360
-    serviceAccountName: argo-argo-workflows-server
+    serviceAccountName: argo
     templates:
       - name: whiskey-analytics-dag
         dag:

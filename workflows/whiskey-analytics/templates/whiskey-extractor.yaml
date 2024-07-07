@@ -5,7 +5,7 @@ metadata:
   namespace: argo
 spec:
   entrypoint: whiskey-extractor-template
-  serviceAccountName: argo-argo-workflows-server
+  serviceAccountName: argo
   templates:
     - name: whiskey-extractor-template
       resource:
