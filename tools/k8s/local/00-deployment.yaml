@@ -1966,12 +1966,7 @@ items:
           env: []
           image: quay.io/argoproj/argocli:v3.5.8
           name: argo-server
-          resources:
-            limits:
-              memory: 500Mi
-            requests:
-              memory: 100Mi
-              cpu: "0.01"
+          resources: {}
           ports:
           - containerPort: 2746
             name: web
@@ -2037,12 +2032,7 @@ items:
             periodSeconds: 60
             timeoutSeconds: 30
           name: workflow-controller
-          resources:
-            limits:
-              memory: 500Mi
-            requests:
-              memory: 100Mi
-              cpu: "0.01"
+          resources: {}
           ports:
           - containerPort: 9090
             name: metrics
@@ -2089,12 +2079,7 @@ items:
             initialDelaySeconds: 5
             periodSeconds: 10
           name: main
-          resources:
-            limits:
-              memory: 500Mi
-            requests:
-              memory: 100Mi
-              cpu: "0.01"
+          resources: {}
           ports:
           - containerPort: 80
             name: api
@@ -2151,12 +2136,7 @@ items:
             initialDelaySeconds: 5
             periodSeconds: 10
           name: main
-          resources:
-            limits:
-              memory: 500Mi
-            requests:
-              memory: 100Mi
-              cpu: "0.01"
+          resources: {}
           ports:
           - containerPort: 9000
             name: api
