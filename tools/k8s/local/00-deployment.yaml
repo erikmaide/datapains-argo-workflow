@@ -1890,7 +1890,7 @@ items:
     - name: web
       port: 2746
       targetPort: 2746
-      nodePort: 32767
+      nodePort: 32765
     selector:
       app: argo-server
 - apiVersion: v1
