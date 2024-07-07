@@ -1,7 +1,7 @@
 update-chart: delete-argo-workflow-chart deploy-argo-workflow-chart
 
-.PHONY: setup-local-helm-argo-workflow
-setup-local-helm-argo-workflow:
+.PHONY: setup-local-argo-workflow
+setup-local-argo-workflow:
 	kubectl apply -f tools/k8s/local/ --validate=false
 
 .PHONY: nuke-local-argo-workflow

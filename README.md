@@ -10,7 +10,7 @@
 ## Argo Workflow
 
 ```bash
-make setup-local-helm-argo-workflow
+make setup-local-argo-workflow
 ```
 
 Access UI [here](https://localhost:32767/).
