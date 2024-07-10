@@ -25,9 +25,8 @@ spec:
                 containers:
                 - name: minio-client-job
                   imagePullPolicy: Always
-                  image: docker/whalesay:latest
-                  command: [cowsay]
-                  args: ["Success!"]
+                  image: bash:devel-alpine3.20
+                  command: [echo Success!]
                   resources:
                     limits:
                       memory: 20Mi
