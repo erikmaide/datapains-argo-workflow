@@ -28,6 +28,8 @@ spec:
                 spark.driver.cores: "1"
                 spark.executor.cores: "1"
                 spark.sql.shuffle.partitions: "1"
+                spark.sql.extensions: "io.delta.sql.DeltaSparkSessionExtension"
+                spark.sql.catalog.spark_catalog: "org.apache.spark.sql.delta.catalog.DeltaCatalog"
                 spark.kubernetes.container.image: "3.5.1-delta-4.0.0rc1-hadoop-3-java-17-scala-2.13-python-3.9:0.0.1"
                 spark.kubernetes.authenticate.driver.serviceAccountName: spark
                 spark.kubernetes.authenticate.executor.serviceAccountName: spark
