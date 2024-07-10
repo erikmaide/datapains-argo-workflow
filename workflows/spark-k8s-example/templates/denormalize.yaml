@@ -10,8 +10,8 @@ spec:
     - name: spark-example
       resource:
         action: apply
-        successCondition: status.succeeded = 1
-        failureCondition: status.failed > 1
+        successCondition: status.applicationState.state == COMPLETED
+        failureCondition: status.applicationState.state == FAILED
         manifest: |
           apiVersion: "sparkoperator.k8s.io/v1beta2"
           kind: SparkApplication
