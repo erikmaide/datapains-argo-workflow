@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: print-success-submittable
+  namespace: argo
+spec:
+  entrypoint: print-success-template
+  serviceAccountName: argo
+  templates:
+    - name: print-success-template
+      resource:
+        action: apply
+        successCondition: status.succeeded = 1
+        failureCondition: status.failed > 1
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: "print-success-job-{-workflow.uid-}"
+            namespace: argo
+          spec:
+            ttlSecondsAfterFinished: 10
+            template:
+              spec:
+                containers:
+                - name: minio-client-job
+                  imagePullPolicy: Always
+                  image: docker/whalesay:latest
+                  command: [cowsay]
+                  args: ["Success!"]
+                  resources:
+                    limits:
+                      memory: 20Mi
+                      cpu: "0.1"
+                    requests:
+                      memory: 20Mi
+                      cpu: "0.1"
+                restartPolicy: Never
+            backoffLimit: 1

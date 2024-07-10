@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: datapains-spark-dag
+  namespace: argo
+spec:
+  schedule: "5 * * * *"
+  concurrencyPolicy: "Forbid"
+  workflowSpec:
+    entrypoint: datapains-spark-dag
+    ttlStrategy:
+      secondsAfterSuccess: 360
+      secondsAfterFailure: 360
+    serviceAccountName: argo
+    templates:
+      - name: datapains-spark-dag
+        dag:
+          failFast: true
+          tasks:
+            - name: spark-example-submit
+              templateRef:
+                template: spark-example
+                name: spark-example-submit
+
+            - name: print-success-submittable
+              templateRef:
+                template: print-success-template
+                name: print-success-submittable
+              dependencies: ["spark-example-submit"]

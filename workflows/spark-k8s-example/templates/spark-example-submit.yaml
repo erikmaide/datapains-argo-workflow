@@ -22,9 +22,9 @@ spec:
             timeToLiveSeconds: 500
             type: Python
             sparkConf:
-                spark.driver.maxResultSize: 500Mi
-                spark.driver.memory: 500Mi
-                spark.executor.memory: 500Mi
+                spark.driver.maxResultSize: 500m
+                spark.driver.memory: 500m
+                spark.executor.memory: 500m
                 spark.driver.cores: "1"
                 spark.executor.cores: "1"
                 spark.sql.shuffle.partitions: "1"
