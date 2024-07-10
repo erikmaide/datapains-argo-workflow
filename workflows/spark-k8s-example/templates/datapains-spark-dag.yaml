@@ -4,7 +4,7 @@ metadata:
   name: datapains-spark-dag
   namespace: argo
 spec:
-  schedule: "* 15 * * *"
+  schedule: "*/15 * * * *"
   concurrencyPolicy: "Forbid"
   workflowSpec:
     entrypoint: datapains-spark-dag
