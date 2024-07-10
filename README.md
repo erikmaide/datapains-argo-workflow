@@ -13,7 +13,11 @@
 make setup-local-argo-workflow
 ```
 
-Access UI [here](https://localhost:32767/).
+```bash
+kubectl port-forward svc/argo-server -n argo 2746:2746
+```
+
+Access UI [here](https://localhost:2746/).
 
 See versions [here](https://github.com/argoproj/argo-workflows/releases).
 
