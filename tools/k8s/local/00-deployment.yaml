@@ -935,9 +935,11 @@ items:
     - argoproj.io
     resources:
     - workflowtasksets
+    - workflowtaskresults
     verbs:
     - list
     - watch
+    - patch
   - apiGroups:
     - argoproj.io
     resources:
@@ -954,9 +956,11 @@ items:
     - argoproj.io
     resources:
     - workflowartifactgctasks
+    - workflowtaskresults
     verbs:
     - list
     - watch
+    - patch
   - apiGroups:
     - argoproj.io
     resources:
@@ -1006,8 +1010,10 @@ items:
     - argoproj.io
     resources:
     - workflowtemplates
+    - workflowtaskresults
     verbs:
     - get
+    - patch
   - apiGroups:
     - argoproj.io
     resources:
@@ -1024,9 +1030,11 @@ items:
     - argoproj.io
     resources:
     - workflows
+    - workflowtaskresults
     verbs:
     - create
     - get
+    - patch
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
@@ -1064,6 +1072,7 @@ items:
     - patch
     - update
     - watch
+    - patch
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
@@ -1107,6 +1116,7 @@ items:
     - patch
     - update
     - watch
+    - patch
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
@@ -1145,6 +1155,7 @@ items:
     - get
     - list
     - watch
+    - patch
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
@@ -1199,6 +1210,7 @@ items:
     - workflows
     - workflows/finalizers
     - workflowtasksets
+    - workflowtaskresults
     - workflowtasksets/finalizers
     - workflowartifactgctasks
     verbs:
@@ -1209,10 +1221,12 @@ items:
     - patch
     - delete
     - create
+    - patch
   - apiGroups:
     - argoproj.io
     resources:
     - workflowtemplates
+    - workflowtaskresults
     - workflowtemplates/finalizers
     - clusterworkflowtemplates
     - clusterworkflowtemplates/finalizers
@@ -1220,6 +1234,7 @@ items:
     - get
     - list
     - watch
+    - patch
   - apiGroups:
     - argoproj.io
     resources:
@@ -1240,6 +1255,7 @@ items:
     resources:
     - cronworkflows
     - cronworkflows/finalizers
+    - workflowtaskresults
     verbs:
     - get
     - list
@@ -1247,6 +1263,7 @@ items:
     - update
     - patch
     - delete
+    - patch
   - apiGroups:
     - ""
     resources:
@@ -1284,10 +1301,12 @@ items:
     resources:
     - clusterworkflowtemplates
     - clusterworkflowtemplates/finalizers
+    - workflowtaskresults
     verbs:
     - get
     - list
     - watch
+    - patch
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
@@ -1357,6 +1376,7 @@ items:
     - workflowtemplates
     - cronworkflows
     - clusterworkflowtemplates
+    - workflowtaskresults
     verbs:
     - create
     - get
@@ -1387,10 +1407,12 @@ items:
     resources:
     - clusterworkflowtemplates
     - clusterworkflowtemplates/finalizers
+    - workflowtaskresults
     verbs:
     - create
     - delete
     - watch
+    - patch
     - get
     - list
     - watch
