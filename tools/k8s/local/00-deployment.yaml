@@ -1858,6 +1858,7 @@ items:
           - server
           - --auth-mode
           - server
+          - --secure=false
           env: []
           image: quay.io/argoproj/argocli:v3.5.8
           name: argo-server
